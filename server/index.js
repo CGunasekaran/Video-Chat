@@ -4,18 +4,52 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://*.vercel.app",
+    "https://vercel.app",
+    "*"
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+}));
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
+    origin: [
+      "http://localhost:3000",
+      "https://*.vercel.app", 
+      "https://vercel.app",
+      "*"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"]
   },
+  allowEIO3: true
 });
 
 // Store rooms and their users
 const rooms = {};
+
+// Health check endpoint
+app.get("/", (req, res) => {
+  res.json({ 
+    status: "Server is running", 
+    timestamp: new Date().toISOString(),
+    cors: "enabled" 
+  });
+});
+
+// Handle preflight requests
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+  res.sendStatus(200);
+});
 
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
