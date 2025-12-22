@@ -44,17 +44,17 @@ export default function Home() {
 
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-white/10 shadow-2xl">
-        <div className="container mx-auto px-6 py-4">
+        <div className="container mx-auto px-4 lg:px-6 py-3 lg:py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 shadow-xl">
-                <Video size={32} className="text-white" />
+            <div className="flex items-center gap-2 lg:gap-4">
+              <div className="p-2 lg:p-3 rounded-xl lg:rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 shadow-xl">
+                <Video size={24} className="lg:w-8 lg:h-8 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-black bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
+                <h1 className="text-lg lg:text-2xl font-black bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
                   VideoConnect
                 </h1>
-                <p className="text-xs text-slate-400 font-medium">
+                <p className="text-[10px] lg:text-xs text-slate-400 font-medium">
                   Premium Video Calls
                 </p>
               </div>
@@ -87,43 +87,46 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 container mx-auto px-6 py-16 min-h-[calc(100vh-160px)] flex flex-col justify-center">
+      <main className="relative z-10 container mx-auto px-4 lg:px-6 py-8 lg:py-16 min-h-[calc(100vh-160px)] flex flex-col justify-center">
         {/* Hero Section */}
-        <div className="text-center mb-16">
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 mb-12">
-            <div className="p-8 rounded-3xl bg-gradient-to-br from-purple-600/30 to-pink-600/30 backdrop-blur-sm border border-white/20 shadow-2xl">
-              <Video size={80} className="text-white drop-shadow-2xl" />
+        <div className="text-center mb-8 lg:mb-16">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8 mb-8 lg:mb-12">
+            <div className="p-6 lg:p-8 rounded-2xl lg:rounded-3xl bg-gradient-to-br from-purple-600/30 to-pink-600/30 backdrop-blur-sm border border-white/20 shadow-2xl">
+              <Video
+                size={60}
+                className="lg:w-20 lg:h-20 text-white drop-shadow-2xl"
+              />
             </div>
             <div>
-              <h1 className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent drop-shadow-2xl mb-4">
+              <h1 className="text-4xl lg:text-7xl font-black bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent drop-shadow-2xl mb-2 lg:mb-4">
                 VideoConnect
               </h1>
-              <p className="text-xl lg:text-2xl text-slate-300 font-semibold">
+              <p className="text-lg lg:text-2xl text-slate-300 font-semibold">
                 Premium video calls made simple
               </p>
             </div>
           </div>
 
-          <p className="text-lg lg:text-xl text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+          <p className="text-base lg:text-xl text-slate-300 max-w-3xl mx-auto mb-6 lg:mb-8 leading-relaxed px-4">
             Connect with anyone, anywhere. High-quality video calls with
             real-time chat, screen sharing, and seamless collaboration - all in
             your browser.
           </p>
 
-          <div className="w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full shadow-lg"></div>
+          <div className="w-24 lg:w-32 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full shadow-lg"></div>
         </div>
 
         {/* Form Section */}
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-slate-800/40 backdrop-blur-2xl p-10 rounded-3xl shadow-2xl border border-white/10 shadow-purple-500/20">
-            <div className="space-y-8">
+        <div className="max-w-2xl mx-auto w-full px-4">
+          <div className="bg-slate-800/40 backdrop-blur-2xl p-6 lg:p-10 rounded-2xl lg:rounded-3xl shadow-2xl border border-white/10 shadow-purple-500/20">
+            <div className="space-y-6 lg:space-y-8">
               <div>
-                <label className="block text-lg font-bold text-white mb-4">
+                <label className="block text-base lg:text-lg font-bold text-white mb-3 lg:mb-4">
                   👤 Your Name
                 </label>
                 <input
                   type="text"
-                  className="w-full px-6 py-4 rounded-2xl bg-slate-700/50 border border-slate-600/50 outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/30 transition-all duration-300 text-white placeholder-slate-400 font-medium text-lg"
+                  className="w-full px-4 lg:px-6 py-3 lg:py-4 rounded-xl lg:rounded-2xl bg-slate-700/50 border border-slate-600/50 outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/30 transition-all duration-300 text-white placeholder-slate-400 font-medium text-base lg:text-lg"
                   placeholder="Enter your name"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -133,13 +136,13 @@ export default function Home() {
               </div>
 
               <div>
-                <label className="block text-lg font-bold text-white mb-4">
+                <label className="block text-base lg:text-lg font-bold text-white mb-3 lg:mb-4">
                   🏠 Room ID
                 </label>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
                   <input
                     type="text"
-                    className="flex-1 px-6 py-4 rounded-2xl bg-slate-700/50 border border-slate-600/50 outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/30 transition-all duration-300 text-white placeholder-slate-400 font-medium text-lg"
+                    className="flex-1 px-4 lg:px-6 py-3 lg:py-4 rounded-xl lg:rounded-2xl bg-slate-700/50 border border-slate-600/50 outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/30 transition-all duration-300 text-white placeholder-slate-400 font-medium text-base lg:text-lg"
                     placeholder="Enter or generate room ID"
                     value={roomId}
                     onChange={(e) => setRoomId(e.target.value)}
@@ -148,7 +151,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={generateRoomId}
-                    className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-2xl transition-all duration-300 font-bold text-white shadow-lg hover:shadow-xl transform hover:scale-105 border border-indigo-500/50 backdrop-blur-sm"
+                    className="w-full sm:w-auto px-6 lg:px-8 py-3 lg:py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl lg:rounded-2xl transition-all duration-300 font-bold text-white shadow-lg hover:shadow-xl transform hover:scale-105 border border-indigo-500/50 backdrop-blur-sm text-base lg:text-lg"
                   >
                     🎲 Generate
                   </button>
@@ -158,7 +161,7 @@ export default function Home() {
               <button
                 onClick={handleJoin}
                 disabled={!username.trim() || !roomId.trim()}
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 disabled:from-slate-700 disabled:to-slate-600 disabled:cursor-not-allowed py-5 rounded-2xl font-black text-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-2xl text-white"
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 disabled:from-slate-700 disabled:to-slate-600 disabled:cursor-not-allowed py-4 lg:py-5 rounded-xl lg:rounded-2xl font-black text-lg lg:text-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-2xl text-white"
               >
                 🚀 Join Meeting
               </button>

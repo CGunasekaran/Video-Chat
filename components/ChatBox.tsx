@@ -67,13 +67,13 @@ export default function ChatBox({
 
   return (
     <div className="h-full flex flex-col backdrop-blur-xl">
-      <div className="p-6 border-b border-white/10">
-        <h2 className="font-bold text-xl text-white bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+      <div className="p-4 lg:p-6 border-b border-white/10">
+        <h2 className="font-bold text-lg lg:text-xl text-white bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
           Chat
         </h2>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-3 lg:p-4 space-y-3 lg:space-y-4">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -82,7 +82,7 @@ export default function ChatBox({
             } max-w-[85%]`}
           >
             <div
-              className={`rounded-2xl p-4 backdrop-blur-sm border ${
+              className={`rounded-xl lg:rounded-2xl p-3 lg:p-4 backdrop-blur-sm border ${
                 msg.sender === currentUsername
                   ? "bg-gradient-to-br from-purple-600/80 to-pink-600/80 border-purple-400/30 shadow-lg shadow-purple-500/20"
                   : "bg-slate-700/50 border-slate-600/50 shadow-lg"
@@ -127,9 +127,9 @@ export default function ChatBox({
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-6 border-t border-white/10">
+      <div className="p-4 lg:p-6 border-t border-white/10">
         {replyingTo && (
-          <div className="mb-4 p-4 bg-slate-700/50 backdrop-blur-sm rounded-2xl border border-slate-600/50 flex items-start justify-between">
+          <div className="mb-3 lg:mb-4 p-3 lg:p-4 bg-slate-700/50 backdrop-blur-sm rounded-xl lg:rounded-2xl border border-slate-600/50 flex items-start justify-between">
             <div className="flex-1 min-w-0">
               <p className="text-xs text-purple-400 font-medium">
                 Replying to {replyingTo.sender}
@@ -147,19 +147,19 @@ export default function ChatBox({
           </div>
         )}
 
-        <div className="flex gap-3">
+        <div className="flex gap-2 lg:gap-3">
           <input
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="flex-1 bg-slate-700/50 backdrop-blur-sm p-4 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-purple-500 border border-slate-600/50 text-white placeholder-slate-400"
+            className="flex-1 bg-slate-700/50 backdrop-blur-sm p-3 lg:p-4 rounded-xl lg:rounded-2xl text-sm outline-none focus:ring-2 focus:ring-purple-500 border border-slate-600/50 text-white placeholder-slate-400"
             placeholder="Type a message..."
             maxLength={500}
           />
           <button
             onClick={handleSend}
             disabled={!inputText.trim()}
-            className="bg-gradient-to-br from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed px-6 rounded-2xl transition-all transform hover:scale-105 shadow-lg border border-purple-400/30"
+            className="bg-gradient-to-br from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed px-4 lg:px-6 rounded-xl lg:rounded-2xl transition-all transform hover:scale-105 shadow-lg border border-purple-400/30"
           >
             <Send size={18} className="text-white" />
           </button>

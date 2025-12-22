@@ -35,12 +35,12 @@ export default function Video({ peer, username }: VideoProps) {
   }, [peer]);
 
   return (
-    <div className="relative aspect-video bg-slate-800/40 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/20 shadow-purple-500/20">
+    <div className="relative w-full h-full min-h-[180px] bg-slate-800/40 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/20 shadow-purple-500/20">
       <video
         ref={ref}
         autoPlay
         playsInline
-        className="w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover"
       />
 
       <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-xl flex items-center gap-3 border border-white/10">
