@@ -735,7 +735,7 @@ export default function Room() {
           console.error("Error stopping screen share track:", error);
         }
       });
-      screenStream.current = null;
+      screenStream.current = undefined;
     }
 
     if (userStream.current) {
