@@ -44,6 +44,9 @@ const io = new Server(server, {
       // Allow any Vercel app domain
       if (origin.includes("vercel.app")) return callback(null, true);
 
+      // Allow any Render app domain
+      if (origin.includes("onrender.com")) return callback(null, true);
+
       // Allow all origins
       return callback(null, true);
     },
