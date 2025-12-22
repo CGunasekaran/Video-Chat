@@ -229,7 +229,7 @@ export default function Room() {
     stream: MediaStream
   ): Peer.Instance {
     // ICE servers configuration with STUN and TURN options
-    const iceServers = [
+    const iceServers: RTCIceServer[] = [
       // STUN servers (free, for basic NAT traversal)
       { urls: "stun:stun.l.google.com:19302" },
       { urls: "stun:stun1.l.google.com:19302" },
@@ -314,7 +314,7 @@ export default function Room() {
     stream: MediaStream
   ): Peer.Instance {
     // ICE servers configuration with STUN and TURN options
-    const iceServers = [
+    const iceServers: RTCIceServer[] = [
       // STUN servers (free, for basic NAT traversal)
       { urls: "stun:stun.l.google.com:19302" },
       { urls: "stun:stun1.l.google.com:19302" },
