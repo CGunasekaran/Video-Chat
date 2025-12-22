@@ -9,7 +9,9 @@ export default function Home() {
   const router = useRouter();
 
   const generateRoomId = () => {
-    const id = Math.random().toString(36).substring(2, 9);
+    const timestamp = Date.now().toString(36);
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    const id = `${timestamp}-${randomStr}`;
     setRoomId(id);
   };
 
@@ -144,10 +146,11 @@ export default function Home() {
                     onKeyPress={handleKeyPress}
                   />
                   <button
+                    type="button"
                     onClick={generateRoomId}
-                    className="px-8 py-4 bg-slate-600/50 hover:bg-slate-500/50 border border-slate-500/50 hover:border-slate-400/50 rounded-2xl transition-all duration-300 font-bold text-white shadow-lg hover:shadow-xl transform hover:scale-105"
+                    className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-2xl transition-all duration-300 font-bold text-white shadow-lg hover:shadow-xl transform hover:scale-105 border border-indigo-500/50 backdrop-blur-sm"
                   >
-                    Generate
+                    🎲 Generate
                   </button>
                 </div>
               </div>
