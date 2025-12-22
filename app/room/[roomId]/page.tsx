@@ -460,177 +460,211 @@ export default function Room() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-900 text-white overflow-hidden">
-      {/* Main Video Area */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <div className="bg-gray-800 px-6 py-4 border-b border-gray-700">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-semibold">Room: {roomId}</h1>
-              <p className="text-sm text-gray-400">
-                {participants.length} participant
-                {participants.length !== 1 ? "s" : ""}
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShowParticipants(!showParticipants)}
-                className={`p-2 rounded-lg transition-colors ${
-                  showParticipants
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "bg-gray-700 hover:bg-gray-600"
-                }`}
-                title="Toggle Participants"
-              >
-                <Users size={20} />
-              </button>
-              <button
-                onClick={() => setShowChat(!showChat)}
-                className={`p-2 rounded-lg transition-colors ${
-                  showChat
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "bg-gray-700 hover:bg-gray-600"
-                }`}
-                title="Toggle Chat"
-              >
-                <MessageSquare size={20} />
-              </button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900 relative overflow-hidden">
+      {/* Modern animated background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/50 via-purple-800/50 to-pink-800/50">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-400/20 via-purple-600/10 to-transparent"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-pink-400/20 via-pink-600/10 to-transparent"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-blue-400/20 via-blue-600/10 to-transparent"></div>
         </div>
 
-        {/* Video Grid */}
-        <div className="flex-1 p-4 overflow-y-auto">
-          <div
-            className={`grid gap-4 h-full ${
-              peers.length === 0
-                ? "grid-cols-1"
-                : peers.length === 1
-                ? "grid-cols-2"
-                : peers.length <= 4
-                ? "grid-cols-2"
-                : peers.length <= 9
-                ? "grid-cols-3"
-                : "grid-cols-4"
-            }`}
-          >
-            {/* Current User Video */}
-            <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden shadow-xl border-2 border-blue-500">
-              <video
-                ref={userVideo}
-                muted
-                autoPlay
-                playsInline
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-2">
-                <span className="text-sm font-medium">{username} (You)</span>
-                {!isAudioEnabled && (
-                  <MicOff size={14} className="text-red-400" />
-                )}
-                {!isVideoEnabled && (
-                  <VideoOff size={14} className="text-red-400" />
-                )}
-                {isScreenSharing && (
-                  <Monitor size={14} className="text-green-400" />
-                )}
-              </div>
-            </div>
-
-            {/* Other Participants */}
-            {peers.map((peerObj) => (
-              <Video
-                key={peerObj.peerID}
-                peer={peerObj.peer}
-                username={peerObj.username}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Control Bar */}
-        <div className="bg-gray-800 px-6 py-4 border-t border-gray-700">
-          <div className="flex items-center justify-center gap-4">
-            <button
-              onClick={toggleAudio}
-              className={`p-4 rounded-full transition-all transform hover:scale-110 ${
-                isAudioEnabled
-                  ? "bg-gray-700 hover:bg-gray-600"
-                  : "bg-red-600 hover:bg-red-700"
-              }`}
-              title={isAudioEnabled ? "Mute" : "Unmute"}
-            >
-              {isAudioEnabled ? <Mic size={24} /> : <MicOff size={24} />}
-            </button>
-
-            <button
-              onClick={toggleVideo}
-              className={`p-4 rounded-full transition-all transform hover:scale-110 ${
-                isVideoEnabled
-                  ? "bg-gray-700 hover:bg-gray-600"
-                  : "bg-red-600 hover:bg-red-700"
-              }`}
-              title={isVideoEnabled ? "Stop Video" : "Start Video"}
-            >
-              {isVideoEnabled ? (
-                <VideoIcon size={24} />
-              ) : (
-                <VideoOff size={24} />
-              )}
-            </button>
-
-            <button
-              onClick={toggleScreenShare}
-              className={`p-4 rounded-full transition-all transform hover:scale-110 ${
-                isScreenSharing
-                  ? "bg-blue-600 hover:bg-blue-700"
-                  : "bg-gray-700 hover:bg-gray-600"
-              }`}
-              title={isScreenSharing ? "Stop Sharing" : "Share Screen"}
-            >
-              {isScreenSharing ? (
-                <MonitorOff size={24} />
-              ) : (
-                <Monitor size={24} />
-              )}
-            </button>
-
-            <button
-              onClick={leaveCall}
-              className="p-4 rounded-full bg-red-600 hover:bg-red-700 transition-all transform hover:scale-110"
-              title="Leave Call"
-            >
-              <Phone size={24} className="rotate-135" />
-            </button>
-          </div>
-        </div>
+        {/* Floating orbs */}
+        <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-indigo-500/25 to-purple-500/25 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
-      {/* Right Sidebar - Participants & Chat */}
-      <div
-        className={`transition-all duration-300 ${
-          showChat || showParticipants ? "w-96" : "w-0"
-        } border-l border-gray-700 flex flex-col overflow-hidden`}
-      >
-        {showParticipants && (
-          <div className="h-1/3 border-b border-gray-700">
-            <ParticipantsList
-              participants={participants}
-              currentUserId={socketRef.current?.id || ""}
-            />
+      {/* Main Container */}
+      <div className="relative z-10 flex h-screen">
+        {/* Left Side - Video Content */}
+        <div className="flex-1 flex flex-col">
+          {/* Header */}
+          <div className="bg-slate-800/40 backdrop-blur-xl px-6 py-4 border-b border-white/10 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-2 rounded-xl bg-gradient-to-br from-purple-600/30 to-pink-600/30 backdrop-blur-sm border border-white/20">
+                  <VideoIcon size={24} className="text-white" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold text-white">
+                    Room: {roomId}
+                  </h1>
+                  <p className="text-sm text-slate-300">
+                    {participants.length} participant
+                    {participants.length !== 1 ? "s" : ""}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setShowParticipants(!showParticipants)}
+                  className={`p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                    showParticipants
+                      ? "bg-purple-600/30 border-purple-400/50"
+                      : "bg-slate-700/30 border-slate-600/50"
+                  } border backdrop-blur-sm`}
+                  title="Toggle Participants"
+                >
+                  <Users size={20} className="text-white" />
+                </button>
+                <button
+                  onClick={() => setShowChat(!showChat)}
+                  className={`p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                    showChat
+                      ? "bg-purple-600/30 border-purple-400/50"
+                      : "bg-slate-700/30 border-slate-600/50"
+                  } border backdrop-blur-sm`}
+                  title="Toggle Chat"
+                >
+                  <MessageSquare size={20} className="text-white" />
+                </button>
+              </div>
+            </div>
           </div>
-        )}
 
-        {showChat && (
-          <div className={showParticipants ? "h-2/3" : "h-full"}>
-            <ChatBox
-              messages={messages}
-              onSendMessage={handleSendMessage}
-              currentUsername={username}
-            />
+          {/* Video Grid */}
+          <div className="flex-1 p-6 overflow-y-auto">
+            <div
+              className={`grid gap-6 h-full ${
+                peers.length === 0
+                  ? "grid-cols-1"
+                  : peers.length === 1
+                  ? "grid-cols-2"
+                  : peers.length <= 4
+                  ? "grid-cols-2"
+                  : peers.length <= 9
+                  ? "grid-cols-3"
+                  : "grid-cols-4"
+              }`}
+            >
+              {/* Current User Video */}
+              <div className="relative aspect-video bg-slate-800/40 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/20 shadow-purple-500/20">
+                <video
+                  ref={userVideo}
+                  muted
+                  autoPlay
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-xl flex items-center gap-3 border border-white/10">
+                  <span className="text-sm font-bold text-white">
+                    {username} (You)
+                  </span>
+                  {!isAudioEnabled && (
+                    <MicOff size={16} className="text-red-400" />
+                  )}
+                  {!isVideoEnabled && (
+                    <VideoOff size={16} className="text-red-400" />
+                  )}
+                  {isScreenSharing && (
+                    <Monitor size={16} className="text-green-400" />
+                  )}
+                </div>
+              </div>
+
+              {/* Other Participants */}
+              {peers.map((peerObj) => (
+                <Video
+                  key={peerObj.peerID}
+                  peer={peerObj.peer}
+                  username={peerObj.username}
+                />
+              ))}
+            </div>
           </div>
-        )}
+
+          {/* Control Bar */}
+          <div className="bg-slate-800/40 backdrop-blur-xl px-6 py-6 border-t border-white/10 shadow-lg">
+            <div className="flex items-center justify-center gap-6">
+              <button
+                onClick={toggleAudio}
+                className={`p-4 rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg ${
+                  isAudioEnabled
+                    ? "bg-slate-700/50 hover:bg-slate-600/50 border-slate-500/50"
+                    : "bg-red-600/80 hover:bg-red-500/80 border-red-400/50"
+                } border backdrop-blur-sm`}
+                title={isAudioEnabled ? "Mute" : "Unmute"}
+              >
+                {isAudioEnabled ? (
+                  <Mic size={24} className="text-white" />
+                ) : (
+                  <MicOff size={24} className="text-white" />
+                )}
+              </button>
+
+              <button
+                onClick={toggleVideo}
+                className={`p-4 rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg ${
+                  isVideoEnabled
+                    ? "bg-slate-700/50 hover:bg-slate-600/50 border-slate-500/50"
+                    : "bg-red-600/80 hover:bg-red-500/80 border-red-400/50"
+                } border backdrop-blur-sm`}
+                title={isVideoEnabled ? "Stop Video" : "Start Video"}
+              >
+                {isVideoEnabled ? (
+                  <VideoIcon size={24} className="text-white" />
+                ) : (
+                  <VideoOff size={24} className="text-white" />
+                )}
+              </button>
+
+              <button
+                onClick={toggleScreenShare}
+                className={`p-4 rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg ${
+                  isScreenSharing
+                    ? "bg-purple-600/80 hover:bg-purple-500/80 border-purple-400/50"
+                    : "bg-slate-700/50 hover:bg-slate-600/50 border-slate-500/50"
+                } border backdrop-blur-sm`}
+                title={isScreenSharing ? "Stop Sharing" : "Share Screen"}
+              >
+                {isScreenSharing ? (
+                  <MonitorOff size={24} className="text-white" />
+                ) : (
+                  <Monitor size={24} className="text-white" />
+                )}
+              </button>
+
+              <button
+                onClick={leaveCall}
+                className="p-4 rounded-2xl bg-red-600/80 hover:bg-red-500/80 transition-all duration-300 transform hover:scale-110 shadow-lg border border-red-400/50 backdrop-blur-sm"
+                title="Leave Call"
+              >
+                <Phone size={24} className="rotate-135 text-white" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Sidebar - Chat & Participants */}
+        <div
+          className={`transition-all duration-300 ${
+            showChat || showParticipants ? "w-96" : "w-0"
+          } flex flex-col overflow-hidden`}
+        >
+          {showParticipants && (
+            <div className="h-1/3 bg-slate-800/40 backdrop-blur-xl border-b border-white/10">
+              <ParticipantsList
+                participants={participants}
+                currentUserId={socketRef.current?.id || ""}
+              />
+            </div>
+          )}
+
+          {showChat && (
+            <div
+              className={`${
+                showParticipants ? "h-2/3" : "h-full"
+              } bg-slate-800/40 backdrop-blur-xl`}
+            >
+              <ChatBox
+                messages={messages}
+                onSendMessage={handleSendMessage}
+                currentUsername={username}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
