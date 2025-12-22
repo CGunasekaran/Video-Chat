@@ -117,60 +117,79 @@ export default function Room() {
         });
 
         // Handle new user joining
-        socketRef.current?.on(
-          "user-joined-signal",
-          (payload: { signal: any; callerID: string; username: string }) => {
-            const peer = addPeer(payload.signal, payload.callerID, stream);
-            peersRef.current.push({
+        const handleUserJoined = (payload: {
+          signal: any;
+          callerID: string;
+          username: string;
+        }) => {
+          const peer = addPeer(payload.signal, payload.callerID, stream);
+          peersRef.current.push({
+            peerID: payload.callerID,
+            peer,
+            username: payload.username,
+          });
+
+          setPeers((prevPeers) => [
+            ...prevPeers,
+            {
               peerID: payload.callerID,
               peer,
               username: payload.username,
-            });
-
-            setPeers((prevPeers) => [
-              ...prevPeers,
-              {
-                peerID: payload.callerID,
-                peer,
-                username: payload.username,
-              },
-            ]);
-          }
-        );
+            },
+          ]);
+        };
 
         // Handle returned signal
-        socketRef.current?.on(
-          "receiving-returned-signal",
-          (payload: { signal: any; id: string }) => {
-            const item = peersRef.current.find((p) => p.peerID === payload.id);
-            if (item) {
-              item.peer.signal(payload.signal);
-            }
+        const handleReturnedSignal = (payload: { signal: any; id: string }) => {
+          const item = peersRef.current.find((p) => p.peerID === payload.id);
+          if (item) {
+            item.peer.signal(payload.signal);
           }
-        );
+        };
 
         // Handle user leaving
-        socketRef.current?.on("user-left", (id: string) => {
+        const handleUserLeft = (id: string) => {
           const peerObj = peersRef.current.find((p) => p.peerID === id);
           if (peerObj) {
             peerObj.peer.destroy();
           }
           peersRef.current = peersRef.current.filter((p) => p.peerID !== id);
           setPeers((prevPeers) => prevPeers.filter((p) => p.peerID !== id));
-        });
+        };
+
+        socketRef.current?.on("user-joined-signal", handleUserJoined);
+        socketRef.current?.on(
+          "receiving-returned-signal",
+          handleReturnedSignal
+        );
+        socketRef.current?.on("user-left", handleUserLeft);
 
         // Handle participants update
-        socketRef.current?.on(
-          "participants-update",
-          (updatedParticipants: Participant[]) => {
-            setParticipants(updatedParticipants);
-          }
-        );
+        const handleParticipantsUpdate = (
+          updatedParticipants: Participant[]
+        ) => {
+          // Deduplicate participants by ID to prevent duplicate entries
+          const uniqueParticipants = updatedParticipants.filter(
+            (participant, index, arr) =>
+              arr.findIndex((p) => p.id === participant.id) === index
+          );
+          setParticipants(uniqueParticipants);
+        };
 
         // Handle new messages
-        socketRef.current?.on("new-message", (messageData: Message) => {
-          setMessages((prev) => [...prev, messageData]);
-        });
+        const handleNewMessage = (messageData: Message) => {
+          setMessages((prev) => {
+            // Check if message already exists to prevent duplicates
+            const messageExists = prev.some((msg) => msg.id === messageData.id);
+            if (messageExists) {
+              return prev;
+            }
+            return [...prev, messageData];
+          });
+        };
+
+        socketRef.current?.on("participants-update", handleParticipantsUpdate);
+        socketRef.current?.on("new-message", handleNewMessage);
       })
       .catch((err) => {
         console.error("Error accessing media devices:", err);
@@ -178,17 +197,29 @@ export default function Room() {
       });
 
     return () => {
-      // Cleanup
+      // Cleanup socket event listeners
+      if (socketRef.current) {
+        socketRef.current.off("user-joined-signal");
+        socketRef.current.off("receiving-returned-signal");
+        socketRef.current.off("user-left");
+        socketRef.current.off("participants-update");
+        socketRef.current.off("new-message");
+        socketRef.current.off("existing-users");
+        socketRef.current.disconnect();
+      }
+
+      // Cleanup media streams
       if (userStream.current) {
         userStream.current.getTracks().forEach((track) => track.stop());
       }
       if (screenStream.current) {
         screenStream.current.getTracks().forEach((track) => track.stop());
       }
+
+      // Cleanup peer connections
       peersRef.current.forEach((peerObj) => {
         peerObj.peer.destroy();
       });
-      socketRef.current?.disconnect();
     };
   }, [roomId, router]);
 
@@ -451,11 +482,15 @@ export default function Room() {
     message: string,
     replyTo?: { sender: string; message: string }
   ) => {
+    const messageId = `${Date.now()}-${Math.random()
+      .toString(36)
+      .substring(7)}`;
     socketRef.current?.emit("send-message", {
       roomId,
       message,
       sender: username,
       replyTo,
+      messageId,
     });
   };
 
