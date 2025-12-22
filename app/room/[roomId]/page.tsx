@@ -667,7 +667,7 @@ export default function Room() {
           // Track ended by user stopping screen share from browser
           // Set screen sharing state without trying to stop already-stopped tracks
           if (screenStream.current) {
-            screenStream.current = null;
+            screenStream.current = undefined;
           }
 
           // Restore camera video for peers
