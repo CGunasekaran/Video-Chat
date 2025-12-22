@@ -192,7 +192,7 @@ export default function Room() {
         socketRef.current?.on("new-message", handleNewMessage);
       })
       .catch((err) => {
-        console.error("Error is accessing media devices:", err);
+        console.error("Error accessing media devices:", err);
         alert("Unable to access camera/microphone. Please check permissions.");
       });
 

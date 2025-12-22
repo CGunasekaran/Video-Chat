@@ -12,7 +12,6 @@ export default function Home() {
     const timestamp = Date.now().toString(36);
     const randomStr = Math.random().toString(36).substring(2, 8);
     const id = `${timestamp}-${randomStr}`;
-    console.log("Generated room ID:", id); // Debug log
     setRoomId(id);
   };
 
