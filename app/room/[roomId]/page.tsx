@@ -16,6 +16,7 @@ import {
   Users,
   Monitor,
   MonitorOff,
+  X,
 } from "lucide-react";
 
 interface PeerData {
@@ -830,76 +831,79 @@ export default function Room() {
       </div>
 
       {/* Main Container */}
-      <div className="relative z-10 flex h-screen">
+      <div className="relative z-10 flex flex-col lg:flex-row h-screen">
         {/* Left Side - Video Content */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-h-0">
           {/* Header */}
-          <div className="bg-slate-800/40 backdrop-blur-xl px-6 py-4 border-b border-white/10 shadow-lg">
+          <div className="bg-slate-800/40 backdrop-blur-xl px-4 lg:px-6 py-4 border-b border-white/10 shadow-lg">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 lg:gap-4">
                 <div className="p-2 rounded-xl bg-gradient-to-br from-purple-600/30 to-pink-600/30 backdrop-blur-sm border border-white/20">
-                  <VideoIcon size={24} className="text-white" />
+                  <VideoIcon size={20} className="lg:w-6 lg:h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-white">
+                  <h1 className="text-lg lg:text-xl font-bold text-white">
                     Room: {roomId}
                   </h1>
-                  <p className="text-sm text-slate-300">
+                  <p className="text-xs lg:text-sm text-slate-300">
                     {participants.length} participant
                     {participants.length !== 1 ? "s" : ""}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 lg:gap-3">
                 <button
                   onClick={() => setShowParticipants(!showParticipants)}
-                  className={`p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                  className={`p-2 lg:p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
                     showParticipants
                       ? "bg-purple-600/30 border-purple-400/50"
                       : "bg-slate-700/30 border-slate-600/50"
                   } border backdrop-blur-sm`}
                   title="Toggle Participants"
                 >
-                  <Users size={20} className="text-white" />
+                  <Users size={18} className="lg:w-5 lg:h-5 text-white" />
                 </button>
                 <button
                   onClick={() => setShowChat(!showChat)}
-                  className={`p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                  className={`p-2 lg:p-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
                     showChat
                       ? "bg-purple-600/30 border-purple-400/50"
                       : "bg-slate-700/30 border-slate-600/50"
                   } border backdrop-blur-sm`}
                   title="Toggle Chat"
                 >
-                  <MessageSquare size={20} className="text-white" />
+                  <MessageSquare
+                    size={18}
+                    className="lg:w-5 lg:h-5 text-white"
+                  />
                 </button>
               </div>
             </div>
           </div>
 
           {/* Video Grid */}
-          <div className="flex-1 p-6 overflow-y-auto">
+          <div className="flex-1 p-4 lg:p-6 overflow-y-auto">
             <div
-              className={`grid gap-6 h-full ${
+              className={`grid gap-3 lg:gap-4 ${
                 peers.length === 0
-                  ? "grid-cols-1"
+                  ? "grid-cols-1 auto-rows-[minmax(300px,1fr)]"
                   : peers.length === 1
-                  ? "grid-cols-2"
+                  ? "grid-cols-1 lg:grid-cols-2 auto-rows-[minmax(300px,1fr)]"
                   : peers.length <= 4
-                  ? "grid-cols-2"
+                  ? "grid-cols-1 sm:grid-cols-2 auto-rows-[minmax(250px,1fr)]"
                   : peers.length <= 9
-                  ? "grid-cols-3"
-                  : "grid-cols-4"
+                  ? "grid-cols-2 sm:grid-cols-3 auto-rows-[minmax(200px,300px)]"
+                  : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 auto-rows-[minmax(180px,250px)]"
               }`}
             >
               {/* Current User Video */}
-              <div className="relative aspect-video bg-slate-800/40 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/20 shadow-purple-500/20">
+              <div className="relative w-full h-full min-h-[180px] bg-slate-800/40 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/20 shadow-purple-500/20">
                 <video
                   ref={userVideo}
                   muted
                   autoPlay
                   playsInline
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-xl flex items-center gap-3 border border-white/10">
                   <span className="text-sm font-bold text-white">
@@ -929,11 +933,11 @@ export default function Room() {
           </div>
 
           {/* Control Bar */}
-          <div className="bg-slate-800/40 backdrop-blur-xl px-6 py-6 border-t border-white/10 shadow-lg">
-            <div className="flex items-center justify-center gap-6">
+          <div className="bg-slate-800/40 backdrop-blur-xl px-4 lg:px-6 py-4 lg:py-6 border-t border-white/10 shadow-lg">
+            <div className="flex items-center justify-center gap-3 lg:gap-6">
               <button
                 onClick={toggleAudio}
-                className={`p-4 rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg ${
+                className={`p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg ${
                   isAudioEnabled
                     ? "bg-slate-700/50 hover:bg-slate-600/50 border-slate-500/50"
                     : "bg-red-600/80 hover:bg-red-500/80 border-red-400/50"
@@ -941,15 +945,15 @@ export default function Room() {
                 title={isAudioEnabled ? "Mute" : "Unmute"}
               >
                 {isAudioEnabled ? (
-                  <Mic size={24} className="text-white" />
+                  <Mic size={20} className="lg:w-6 lg:h-6 text-white" />
                 ) : (
-                  <MicOff size={24} className="text-white" />
+                  <MicOff size={20} className="lg:w-6 lg:h-6 text-white" />
                 )}
               </button>
 
               <button
                 onClick={toggleVideo}
-                className={`p-4 rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg ${
+                className={`p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg ${
                   isVideoEnabled
                     ? "bg-slate-700/50 hover:bg-slate-600/50 border-slate-500/50"
                     : "bg-red-600/80 hover:bg-red-500/80 border-red-400/50"
@@ -957,15 +961,15 @@ export default function Room() {
                 title={isVideoEnabled ? "Stop Video" : "Start Video"}
               >
                 {isVideoEnabled ? (
-                  <VideoIcon size={24} className="text-white" />
+                  <VideoIcon size={20} className="lg:w-6 lg:h-6 text-white" />
                 ) : (
-                  <VideoOff size={24} className="text-white" />
+                  <VideoOff size={20} className="lg:w-6 lg:h-6 text-white" />
                 )}
               </button>
 
               <button
                 onClick={toggleScreenShare}
-                className={`p-4 rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg ${
+                className={`p-3 lg:p-4 rounded-xl lg:rounded-2xl transition-all duration-300 transform hover:scale-110 shadow-lg ${
                   isScreenSharing
                     ? "bg-purple-600/80 hover:bg-purple-500/80 border-purple-400/50"
                     : "bg-slate-700/50 hover:bg-slate-600/50 border-slate-500/50"
@@ -973,18 +977,21 @@ export default function Room() {
                 title={isScreenSharing ? "Stop Sharing" : "Share Screen"}
               >
                 {isScreenSharing ? (
-                  <MonitorOff size={24} className="text-white" />
+                  <MonitorOff size={20} className="lg:w-6 lg:h-6 text-white" />
                 ) : (
-                  <Monitor size={24} className="text-white" />
+                  <Monitor size={20} className="lg:w-6 lg:h-6 text-white" />
                 )}
               </button>
 
               <button
                 onClick={leaveCall}
-                className="p-4 rounded-2xl bg-red-600/80 hover:bg-red-500/80 transition-all duration-300 transform hover:scale-110 shadow-lg border border-red-400/50 backdrop-blur-sm"
+                className="p-3 lg:p-4 rounded-xl lg:rounded-2xl bg-red-600/80 hover:bg-red-500/80 transition-all duration-300 transform hover:scale-110 shadow-lg border border-red-400/50 backdrop-blur-sm"
                 title="Leave Call"
               >
-                <Phone size={24} className="rotate-135 text-white" />
+                <Phone
+                  size={20}
+                  className="lg:w-6 lg:h-6 rotate-135 text-white"
+                />
               </button>
             </div>
           </div>
@@ -992,10 +999,26 @@ export default function Room() {
 
         {/* Right Sidebar - Chat & Participants */}
         <div
-          className={`transition-all duration-300 ${
-            showChat || showParticipants ? "w-96" : "w-0"
-          } flex flex-col overflow-hidden`}
+          className={`fixed lg:relative inset-0 lg:inset-auto z-50 lg:z-auto transition-all duration-300 ${
+            showChat || showParticipants
+              ? "translate-x-0 w-full lg:w-96"
+              : "translate-x-full lg:translate-x-0 w-0"
+          } flex flex-col overflow-hidden bg-slate-900/95 lg:bg-transparent backdrop-blur-xl`}
         >
+          {/* Mobile Close Button */}
+          {(showChat || showParticipants) && (
+            <button
+              onClick={() => {
+                setShowChat(false);
+                setShowParticipants(false);
+              }}
+              className="lg:hidden absolute top-4 right-4 z-10 p-2 rounded-xl bg-slate-700/80 hover:bg-slate-600/80 backdrop-blur-sm border border-white/10 transition-colors"
+              title="Close"
+            >
+              <X size={20} className="text-white" />
+            </button>
+          )}
+
           {showParticipants && (
             <div className="h-1/3 bg-slate-800/40 backdrop-blur-xl border-b border-white/10">
               <ParticipantsList
