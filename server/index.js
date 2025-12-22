@@ -10,21 +10,18 @@ const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
+
     // Allow localhost for development
-    if (origin.includes('localhost')) return callback(null, true);
-    
+    if (origin.includes("localhost")) return callback(null, true);
+
     // Allow any Vercel app domain
-    if (origin.includes('vercel.app')) return callback(null, true);
-    
+    if (origin.includes("vercel.app")) return callback(null, true);
+
     // Allow the specific domain if needed
-    const allowedOrigins = [
-      "http://localhost:3000",
-      "https://localhost:3000"
-    ];
-    
+    const allowedOrigins = ["http://localhost:3000", "https://localhost:3000"];
+
     if (allowedOrigins.includes(origin)) return callback(null, true);
-    
+
     // Allow all origins in development/testing
     return callback(null, true);
   },
@@ -40,13 +37,13 @@ const io = new Server(server, {
     origin: function (origin, callback) {
       // Allow requests with no origin
       if (!origin) return callback(null, true);
-      
+
       // Allow localhost
-      if (origin.includes('localhost')) return callback(null, true);
-      
+      if (origin.includes("localhost")) return callback(null, true);
+
       // Allow any Vercel app domain
-      if (origin.includes('vercel.app')) return callback(null, true);
-      
+      if (origin.includes("vercel.app")) return callback(null, true);
+
       // Allow all origins
       return callback(null, true);
     },
@@ -74,7 +71,10 @@ app.options("*", (req, res) => {
   const origin = req.headers.origin;
   res.header("Access-Control-Allow-Origin", origin || "*");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Content-Length, X-Requested-With"
+  );
   res.header("Access-Control-Allow-Credentials", "true");
   res.sendStatus(200);
 });
