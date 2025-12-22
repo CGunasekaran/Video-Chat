@@ -4,28 +4,52 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
-app.use(
-  cors({
-    origin: [
+
+// CORS function to handle dynamic origins
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Allow localhost for development
+    if (origin.includes('localhost')) return callback(null, true);
+    
+    // Allow any Vercel app domain
+    if (origin.includes('vercel.app')) return callback(null, true);
+    
+    // Allow the specific domain if needed
+    const allowedOrigins = [
       "http://localhost:3000",
-      "https://*.vercel.app",
-      "https://vercel.app",
-      "*",
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  })
-);
+      "https://localhost:3000"
+    ];
+    
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    
+    // Allow all origins in development/testing
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+};
+
+app.use(cors(corsOptions));
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: [
-      "http://localhost:3000",
-      "https://*.vercel.app",
-      "https://vercel.app",
-      "*",
-    ],
+    origin: function (origin, callback) {
+      // Allow requests with no origin
+      if (!origin) return callback(null, true);
+      
+      // Allow localhost
+      if (origin.includes('localhost')) return callback(null, true);
+      
+      // Allow any Vercel app domain
+      if (origin.includes('vercel.app')) return callback(null, true);
+      
+      // Allow all origins
+      return callback(null, true);
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -47,12 +71,11 @@ app.get("/", (req, res) => {
 
 // Handle preflight requests
 app.options("*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  const origin = req.headers.origin;
+  res.header("Access-Control-Allow-Origin", origin || "*");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With"
-  );
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+  res.header("Access-Control-Allow-Credentials", "true");
   res.sendStatus(200);
 });
 
