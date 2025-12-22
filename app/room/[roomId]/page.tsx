@@ -244,8 +244,8 @@ export default function Room() {
       ) {
         iceServers.push({
           urls: "turn:global.turn.twilio.com:3478?transport=udp",
-          username: process.env.NEXT_PUBLIC_TWILIO_TURN_USERNAME,
-          credential: process.env.NEXT_PUBLIC_TWILIO_TURN_CREDENTIAL,
+          username: process.env.NEXT_PUBLIC_TWILIO_TURN_USERNAME!,
+          credential: process.env.NEXT_PUBLIC_TWILIO_TURN_CREDENTIAL!,
         });
       }
 
@@ -257,18 +257,18 @@ export default function Room() {
         iceServers.push(
           {
             urls: "turn:a.relay.metered.ca:80",
-            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME,
-            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL,
+            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME!,
+            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL!,
           },
           {
             urls: "turn:a.relay.metered.ca:80?transport=tcp",
-            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME,
-            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL,
+            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME!,
+            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL!,
           },
           {
             urls: "turn:a.relay.metered.ca:443",
-            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME,
-            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL,
+            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME!,
+            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL!,
           }
         );
       }
@@ -280,9 +280,9 @@ export default function Room() {
         process.env.NEXT_PUBLIC_CUSTOM_TURN_CREDENTIAL
       ) {
         iceServers.push({
-          urls: process.env.NEXT_PUBLIC_CUSTOM_TURN_URL,
-          username: process.env.NEXT_PUBLIC_CUSTOM_TURN_USERNAME,
-          credential: process.env.NEXT_PUBLIC_CUSTOM_TURN_CREDENTIAL,
+          urls: process.env.NEXT_PUBLIC_CUSTOM_TURN_URL!,
+          username: process.env.NEXT_PUBLIC_CUSTOM_TURN_USERNAME!,
+          credential: process.env.NEXT_PUBLIC_CUSTOM_TURN_CREDENTIAL!,
         });
       }
     }
@@ -329,8 +329,8 @@ export default function Room() {
       ) {
         iceServers.push({
           urls: "turn:global.turn.twilio.com:3478?transport=udp",
-          username: process.env.NEXT_PUBLIC_TWILIO_TURN_USERNAME,
-          credential: process.env.NEXT_PUBLIC_TWILIO_TURN_CREDENTIAL,
+          username: process.env.NEXT_PUBLIC_TWILIO_TURN_USERNAME!,
+          credential: process.env.NEXT_PUBLIC_TWILIO_TURN_CREDENTIAL!,
         });
       }
 
@@ -342,18 +342,18 @@ export default function Room() {
         iceServers.push(
           {
             urls: "turn:a.relay.metered.ca:80",
-            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME,
-            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL,
+            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME!,
+            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL!,
           },
           {
             urls: "turn:a.relay.metered.ca:80?transport=tcp",
-            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME,
-            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL,
+            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME!,
+            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL!,
           },
           {
             urls: "turn:a.relay.metered.ca:443",
-            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME,
-            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL,
+            username: process.env.NEXT_PUBLIC_METERED_TURN_USERNAME!,
+            credential: process.env.NEXT_PUBLIC_METERED_TURN_CREDENTIAL!,
           }
         );
       }
@@ -365,9 +365,9 @@ export default function Room() {
         process.env.NEXT_PUBLIC_CUSTOM_TURN_CREDENTIAL
       ) {
         iceServers.push({
-          urls: process.env.NEXT_PUBLIC_CUSTOM_TURN_URL,
-          username: process.env.NEXT_PUBLIC_CUSTOM_TURN_USERNAME,
-          credential: process.env.NEXT_PUBLIC_CUSTOM_TURN_CREDENTIAL,
+          urls: process.env.NEXT_PUBLIC_CUSTOM_TURN_URL!,
+          username: process.env.NEXT_PUBLIC_CUSTOM_TURN_USERNAME!,
+          credential: process.env.NEXT_PUBLIC_CUSTOM_TURN_CREDENTIAL!,
         });
       }
     }
