@@ -97,11 +97,32 @@ export default function Room() {
           userVideo.current.srcObject = stream;
         }
 
-        // Join room
-        socketRef.current?.emit("join-room", {
-          roomId,
-          username: storedUsername,
-        });
+        // Handle participants update (register BEFORE joining room)
+        const handleParticipantsUpdate = (
+          updatedParticipants: Participant[]
+        ) => {
+          // Deduplicate participants by ID to prevent duplicate entries
+          const uniqueParticipants = updatedParticipants.filter(
+            (participant, index, arr) =>
+              arr.findIndex((p) => p.id === participant.id) === index
+          );
+          setParticipants(uniqueParticipants);
+        };
+
+        // Handle new messages (register BEFORE joining room)
+        const handleNewMessage = (messageData: Message) => {
+          setMessages((prev) => {
+            // Check if message already exists to prevent duplicates
+            const messageExists = prev.some((msg) => msg.id === messageData.id);
+            if (messageExists) {
+              return prev;
+            }
+            return [...prev, messageData];
+          });
+        };
+
+        socketRef.current?.on("participants-update", handleParticipantsUpdate);
+        socketRef.current?.on("new-message", handleNewMessage);
 
         // Handle existing users
         socketRef.current?.on("existing-users", (users: Participant[]) => {
@@ -128,6 +149,12 @@ export default function Room() {
             });
           });
           setPeers(newPeers);
+        });
+
+        // Join room (AFTER setting up all event listeners)
+        socketRef.current?.emit("join-room", {
+          roomId,
+          username: storedUsername,
         });
 
         // Handle new user joining
@@ -248,33 +275,6 @@ export default function Room() {
           handleReturnedSignal
         );
         socketRef.current?.on("user-left", handleUserLeft);
-
-        // Handle participants update
-        const handleParticipantsUpdate = (
-          updatedParticipants: Participant[]
-        ) => {
-          // Deduplicate participants by ID to prevent duplicate entries
-          const uniqueParticipants = updatedParticipants.filter(
-            (participant, index, arr) =>
-              arr.findIndex((p) => p.id === participant.id) === index
-          );
-          setParticipants(uniqueParticipants);
-        };
-
-        // Handle new messages
-        const handleNewMessage = (messageData: Message) => {
-          setMessages((prev) => {
-            // Check if message already exists to prevent duplicates
-            const messageExists = prev.some((msg) => msg.id === messageData.id);
-            if (messageExists) {
-              return prev;
-            }
-            return [...prev, messageData];
-          });
-        };
-
-        socketRef.current?.on("participants-update", handleParticipantsUpdate);
-        socketRef.current?.on("new-message", handleNewMessage);
       } catch (err: any) {
         console.error("Error accessing media devices:", err);
 
