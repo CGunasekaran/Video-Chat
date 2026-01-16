@@ -226,8 +226,8 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Sticky Footer */}
-      <footer className="sticky bottom-0 z-50 bg-slate-900/90 backdrop-blur-xl border-t border-white/10 shadow-2xl mt-20">
+      {/* Footer */}
+      <footer className="bg-slate-900/90 backdrop-blur-xl border-t border-white/10 shadow-2xl mt-20">
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-4">
